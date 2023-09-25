@@ -1,17 +1,13 @@
 const calcularNotaFinal = () => {
-  const nombre = document.getElementById('nombre').value;
-  const nota1 = parseFloat(document.getElementById('nota1').value);
-  const nota2 = parseFloat(document.getElementById('nota2').value);
-  const nota3 = parseFloat(document.getElementById('nota3').value);
+  let nota1 = '';
+  let nota2 = '';
+  let nota3 = '';
 
-  if (nombre === '') {
-    alert('Por favor, escribe tu nombre');
-    return;
-  }
-
-  if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
-    alert('Por favor completa todas tus notas');
-    return;
+  while (nota1 === '' || nota2 === '' || nota3 === '') {
+    alert('Por favor, ingresa tus notas');
+    nota1 = parseFloat(prompt('Ingresa tu primer nota'));
+    nota2 = parseFloat(prompt('Ingresa tu segunda nota'));
+    nota3 = parseFloat(prompt('Ingresa tu tercer nota'));
   }
 
   const notaFinal = (nota1 + nota2 + nota3) / 3;
@@ -23,10 +19,6 @@ const calcularNotaFinal = () => {
 };
 
 const resetForm = () => {
-  document.getElementById('nombre').value = '';
-  document.getElementById('nota1').value = '';
-  document.getElementById('nota2').value = '';
-  document.getElementById('nota3').value = '';
   document.getElementById('resultado').textContent = '';
   document.getElementById('estado').textContent = '';
 };
