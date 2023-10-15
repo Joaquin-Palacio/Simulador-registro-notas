@@ -1,29 +1,25 @@
 const validarNota = (nota) => {
-  const expreRegular = /^[0-9]{1,2}$/;
-  return expreRegular.test(nota) && nota <= 10;
+  return nota >= 1 && nota <= 10;
 };
 
 const calcularNotaFinal = () => {
-  let nota1 = '';
-  let nota2 = '';
-  let nota3 = '';
+  const notas = [];
 
-  while (nota1 === '' || !validarNota(nota1)) {
-    alert('Por favor, ingresa una nota válida (1-10)');
-    nota1 = parseFloat(prompt('Primer nota:'));
+  const obtenerNotaValida = (i) => {
+    let nota = '';
+    while (nota === '' || !validarNota(nota)) {
+      alert('Por favor, ingresa una nota válida (1-10)');
+      nota = parseFloat(prompt(`Nota ${i + 1}:`));
+    }
+    return nota;
+  };
+
+  for (let i = 0; i < 3; i++) {
+    const nota = obtenerNotaValida(i);
+    notas.push(nota);
   }
 
-  while (nota2 === '' || !validarNota(nota2)) {
-    alert('Por favor, ingresa una nota válida (1-10)');
-    nota2 = parseFloat(prompt('Segunda nota:'));
-  }
-
-  while (nota3 === '' || !validarNota(nota3)) {
-    alert('Por favor, ingresa una nota válida (1-10)');
-    nota3 = parseFloat(prompt('Tercer nota:'));
-  }
-
-  const notaFinal = (nota1 + nota2 + nota3) / 3;
+  const notaFinal = notas.reduce((a, nota) => a + nota, 0) / 3;
 
   const resultado = notaFinal < 6 ? 'Desaprobado' : 'Aprobado';
 
