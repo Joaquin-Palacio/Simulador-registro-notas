@@ -3,7 +3,7 @@ const validarNota = (nota) => {
 };
 
 const calcularNotaFinal = () => {
-  const notas = [];
+  const estudiantes = [];
 
   const obtenerNotaValida = (i) => {
     let nota = '';
@@ -15,19 +15,48 @@ const calcularNotaFinal = () => {
   };
 
   for (let i = 0; i < 3; i++) {
-    const nota = obtenerNotaValida(i);
-    notas.push(nota);
+    let nombre = '';
+    while (nombre === '') {
+      nombre = prompt(`Nombre del estudiante ${i + 1}:`);
+    }
+    const notas = [];
+
+    for (let j = 0; j < 3; j++) {
+      const nota = obtenerNotaValida(j);
+      notas.push(nota);
+    }
+
+    const notaFinal = notas.reduce((a, nota) => a + nota, 0) / 3;
+
+    const resultado = notaFinal < 6 ? 'Desaprobado' : 'Aprobado';
+
+    estudiantes.push({ nombre, notas, notaFinal, resultado });
   }
 
-  const notaFinal = notas.reduce((a, nota) => a + nota, 0) / 3;
+  const resultadosEstudiantes = document.getElementById(
+    'resultados-estudiantes'
+  );
+  resultadosEstudiantes.innerHTML = '';
 
-  const resultado = notaFinal < 6 ? 'Desaprobado' : 'Aprobado';
-
-  document.getElementById('resultado').textContent = notaFinal.toFixed(2);
-  document.getElementById('estado').textContent = resultado;
+  estudiantes.forEach((estudiante, index) => {
+    const resultadoEstudiante = document.createElement('div');
+    resultadoEstudiante.innerHTML = `<p>Estudiante ${index + 1} - Nombre: ${
+      estudiante.nombre
+    }</p>`;
+    resultadoEstudiante.innerHTML += `<p>Notas: ${estudiante.notas.join(
+      ', '
+    )}</p>`;
+    resultadoEstudiante.innerHTML += `<p>Nota Final: ${estudiante.notaFinal.toFixed(
+      2
+    )}</p>`;
+    resultadoEstudiante.innerHTML += `<p>Resultado: ${estudiante.resultado}</p>`;
+    resultadosEstudiantes.appendChild(resultadoEstudiante);
+  });
 };
 
 const resetForm = () => {
-  document.getElementById('resultado').textContent = '';
-  document.getElementById('estado').textContent = '';
+  const resultadosEstudiantes = document.getElementById(
+    'resultados-estudiantes'
+  );
+  resultadosEstudiantes.innerHTML = '';
 };
