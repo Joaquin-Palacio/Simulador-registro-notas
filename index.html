@@ -4,26 +4,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pre-entrega 01</title>
+  <title>Entrega 3</title>
 
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.min.css">
+  <!-- CSS -->
   <link rel="stylesheet" href="./css/estilos.css">
+
 </head>
 
 <body>
-  <h1>Calculadora de nota final</h1>
+  <h1>Registro de Alumnos</h1>
 
-  <form id="calcular-nota">
-    <button type="button" onclick="calcularNotaFinal()">Calcular Nota Final</button><br><br>
+  <div class="container">
 
-    <p>Nota Final: <span id="resultado"></span></p>
-    <p>Resultado: <span id="estado"></span></p>
+    <label for="nombreEstudiante">Nombre del estudiante:</label>
 
-    <button type="button" onclick="resetForm()">Reiniciar</button>
-  </form>
+    <input type="text" id="nombreEstudiante" onkeydown="focusNext(event, 'nota1')">
+    <label for="nota1">Nota 1:</label>
+    <input type="number" id="nota1" min="1" max="10" onkeydown="focusNext(event, 'nota2')">
 
-  <div id="resultados-estudiantes"></div>
+    <label for="nota2">Nota 2:</label>
+    <input type="number" id="nota2" min="1" max="10" onkeydown="focusNext(event, 'nota3')">
 
+    <label for="nota3">Nota 3:</label>
+    <input type="number" id="nota3" min="1" max="10" onkeydown="submitForm(event)">
+
+    <div class="btn-group">
+      <button onclick="agregarEstudiante()">Agregar Estudiante</button>
+      <button class="btn-deleteAll" onclick="resetearResultados()">Borrar Datos Guardados</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="resultados-estudiantes"></div>
+  </div>
+
+  <!-- Script js -->
   <script src="./main.js"></script>
+  
+  <!-- Script SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
