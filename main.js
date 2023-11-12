@@ -10,11 +10,22 @@ function agregarEstudiante() {
   const nota2 = parseFloat(document.getElementById('nota2').value);
   const nota3 = parseFloat(document.getElementById('nota3').value);
 
-  if (nombre === '' || !validarNota(nota1) || !validarNota(nota2) || !validarNota(nota3)) {
+  // Verificar que todos los campos estén llenos
+  if (!nombre || isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'Por favor, ingresa información válida.',
+      text: 'Por favor, completa todos los campos.',
+    });
+    return;
+  }
+
+  // Verificar que las notas estén en el rango válido
+  if (!validarNota(nota1) || !validarNota(nota2) || !validarNota(nota3)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Por favor, ingresa notas válidas (entre 1 y 10).',
     });
     return;
   }
@@ -29,10 +40,10 @@ function agregarEstudiante() {
     confirmButtonText: 'Sí, agregar',
   }).then((result) => {
     if (result.isConfirmed) {
-      // Agregar el estudiante
+      // Resto del código permanece igual
       const notas = [nota1, nota2, nota3];
       const notaFinal = (nota1 + nota2 + nota3) / 3;
-      const resultado = notaFinal < 6 ? 'Desaprobado' : 'Aprobado';
+      const resultado = notaFinal < 6 ? 'Desaprobado ❌' : 'Aprobado ✅';
 
       estudiantes.push({ nombre, notas, notaFinal, resultado });
       limpiarCampos();
