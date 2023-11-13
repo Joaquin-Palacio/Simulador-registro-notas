@@ -115,6 +115,10 @@ function eliminarEstudiante(index) {
     if (result.isConfirmed) {
       estudiantes.splice(index, 1);
       mostrarResultados();
+
+      // Eliminar el estudiante del localStorage
+      localStorage.setItem('datosEstudiantes', JSON.stringify(estudiantes));
+
       Swal.fire('¡Estudiante eliminado!', '', 'success');
     }
   });
