@@ -8,6 +8,7 @@ function validarNota(nota) {
 
 // Función para formatear la fecha y hora
 function formatearFechaHora(fecha) {
+  // Opciones de formato para la función toLocaleString
   const opciones = {
     hour: '2-digit',
     minute: '2-digit',
@@ -36,6 +37,20 @@ async function obtenerHoraFechaActual() {
   }
 }
 
+// Función asíncrona para obtener datos desde un archivo JSON local
+async function obtenerDatosJSON() {
+  const urlJSON = './datos.json';
+
+  try {
+    const response = await fetch(urlJSON);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('Error al obtener los datos', error);
+    return null;
+  }
+}
+
 // Función para agregar un estudiante
 async function agregarEstudiante() {
   // Obtener los datos del formulario
@@ -43,6 +58,21 @@ async function agregarEstudiante() {
   const nota1 = parseFloat(document.getElementById('nota1').value);
   const nota2 = parseFloat(document.getElementById('nota2').value);
   const nota3 = parseFloat(document.getElementById('nota3').value);
+
+  // Obtener datos JSON local
+  const data = await obtenerDatosJSON();
+
+  if (!data) {
+    console.log('no se pudieron cargar los datos');
+    return 'Error en la carga de datos';
+  }
+
+  // Obtener año y división aleatoria
+  const años = Object.keys(data);
+  const añoAleatorio = años[Math.floor(Math.random() * años.length)];
+  const divisiones = data[añoAleatorio];
+  const divisionAleatoria =
+    divisiones[Math.floor(Math.random() * divisiones.length)];
 
   // Verificar que todos los campos estén llenos
   if (!nombre || isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
@@ -90,6 +120,8 @@ async function agregarEstudiante() {
         notaFinal,
         resultado,
         horaFechaActual,
+        añoAleatorio,
+        divisionAleatoria,
       });
       // Limpiar los campos del formulario
       limpiarCampos();
@@ -141,6 +173,7 @@ function mostrarResultados() {
     resultadoEstudiante.innerHTML += `<p>Nota Final: ${notaFinal}</p>`;
     resultadoEstudiante.innerHTML += `<p>Estado: ${estudiante.resultado}</p>`;
     resultadoEstudiante.innerHTML += `<p>Fecha de carga: ${estudiante.horaFechaActual}</p>`;
+    resultadoEstudiante.innerHTML += `<p>${estudiante.añoAleatorio} año. División: ${estudiante.divisionAleatoria}</p>`;
 
     // Crear un botón para eliminar al estudiante
     const botonEliminar = document.createElement('button');
